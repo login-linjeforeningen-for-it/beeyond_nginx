@@ -37,3 +37,24 @@ server {
     server_name login.no *.login.no;
     return 301 https://$host$request_uri;
 }
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name vault.login.no;
+    
+    ssl_certificate /etc/letsencrypt/live/vault.login.no/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/vault.login.no/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+
+    include snippets/errors.conf;
+
+    location / {
+        proxy_pass http://localhost:8800;
+        include snippets/proxy-headers.conf;
+    }
+}
