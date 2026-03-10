@@ -75,7 +75,7 @@ server {
     include snippets/errors.conf;
 
     location / {
-        proxy_pass http://localhost:9443;
+        proxy_pass http://localhost:9000;
         include snippets/proxy-headers.conf;
     }
 }
